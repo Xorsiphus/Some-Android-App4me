@@ -1,0 +1,16 @@
+Lab_1.docx
+
+/SomeUtilsApp/.expo/
+/SomeUtilsApp/.expo-shared/
+/SomeUtilsApp/.git/
+/SomeUtilsApp/.vscode/
+/SomeUtilsApp/node_moduels/
+/SomeUtilsApp/web-build/
+
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
