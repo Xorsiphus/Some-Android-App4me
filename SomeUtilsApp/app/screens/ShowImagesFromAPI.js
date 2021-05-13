@@ -41,7 +41,7 @@ function ShowImagesFromApi(props) {
 
             <SliderBox
                 images={links.map((item) => item.url)}
-                sliderBoxHeight={0}
+                disableOnPress={true}
                 resizeMode={'contain'}
                 currentImageEmitter={(cur) => swipeHandler(cur)}
                 ImageComponentStyle={{borderRadius: 15, height: dimensions.height, width: dimensions.width, marginTop: 5}}
@@ -50,13 +50,6 @@ function ShowImagesFromApi(props) {
                     height: 0,
                   }}
             />
-
-            {/* <FlatList 
-            data={links} 
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-                <Image source={{uri: item.url}} style = {{height: dimensions.height, width: dimensions.width, resizeMode: 'contain'}}/>
-            )}/> */}
 
             <TouchableOpacity 
                 onPress={backHandler}
