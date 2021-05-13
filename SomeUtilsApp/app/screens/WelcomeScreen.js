@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, Image, SafeAreaView, Button, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, Image, SafeAreaView, View, TouchableOpacity } from 'react-native';
 
 function WelcomeScreen(props) {
     return (
@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
     },
     label: {
       fontSize: 30,
-      textAlign: 'center'
+      textAlign: 'center',
+      color: 'white'
       // fontFamily: 
     },
     buttonsView: {

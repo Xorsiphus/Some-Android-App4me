@@ -12,8 +12,7 @@ const screens = {
     CategoriesList: {
         screen: ChooseCategoryScreen
     },
-    ShowImages:
-    {
+    ShowImages: {
         screen: ShowImagesFromApi
     }
 };

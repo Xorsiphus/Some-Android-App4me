@@ -83,8 +83,8 @@ function ChooseCategoryScreen(props) {
                     borderRadius: 30,
                     top: 30,
                     left: 15,
-                    width: 30,
-                    height: 30,
+                    width: '5%',
+                    height: '5%',
             }} >
             </TouchableOpacity>
 
@@ -95,8 +95,8 @@ function ChooseCategoryScreen(props) {
                 position: 'absolute',
                 padding: 5,
                 borderRadius: 30,
-                bottom: 30,
-                right: 15,
+                bottom: '5%',
+                right: '5%',
             }}>
                 <AntDesign name="back" size={40} color="dodgerblue" />
             </TouchableOpacity>
