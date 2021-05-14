@@ -5,8 +5,19 @@ import axios from 'axios';
 
 const height = Dimensions.get('screen').height;
 
+
 function ISSPositionScreen() {
 
+    const [startCamera, setStartCamera] = useState({
+        center: {
+           latitude: 0,
+           longitude: 0,
+       },
+       pitch: 0,
+       heading: 0,
+       altitude: 0,
+       zoom: 1
+    });
     const requestURL = "http://api.open-notify.org/iss-now.json";
     const [myRegion, setRegion] = useState({latitude: 200, longitude: 0});
     const [fetching, setFetching] = useState(true);
@@ -26,7 +37,7 @@ function ISSPositionScreen() {
             });
             myInterval = setInterval(regionUpdate, 2000);
         }
-        return () => { isMounted = false; if(!myInterval) clearInterval(myInterval); };
+        return () => { isMounted = false; if(myInterval) clearInterval(myInterval); };
     }, [fetching]);
       
     const regionUpdate = () => {
@@ -36,7 +47,9 @@ function ISSPositionScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <MapView
-                loadingEnabled={true}
+                // loadingEnabled={true}
+                // initialRegion={startRegion}
+                initialCamera={startCamera}
                 style={styles.map}
             >
                 <MapView.Marker coordinate={myRegion} />

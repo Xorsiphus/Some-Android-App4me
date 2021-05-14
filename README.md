@@ -1,6 +1,8 @@
-# Some-Android-App4me
+# SomeUtilsApp
 
 This project was bootstrapped with [Expo](https://expo.io/) (platform for React Native).
+
+Deployment:
 
 ## Available Scripts
 
