@@ -3,8 +3,8 @@ import { StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
 import axios from 'axios';
 
-const height = Dimensions.get('screen').height;
 
+const height = Dimensions.get('screen').height;
 
 function ISSPositionScreen() {
 
@@ -32,19 +32,17 @@ function ISSPositionScreen() {
                 longitude: parseFloat(response.data.iss_position.longitude),
             })
         }).finally(() => { 
-                setFetching(false);
+                if(isMounted) setFetching(false);
             });
-            this.timerId = setInterval(regionUpdate, 2000);
+            this.timerId = setInterval(() => {
+                if(isMounted) setFetching(true)
+            }, 2000);
         }
         return () => { 
             isMounted = false; 
-            // if(this.timerId) clearInterval(this.timerId); 
+            if(this.timerId) clearInterval(this.timerId); 
         };
     }, [fetching]);
-      
-    const regionUpdate = () => {
-        setFetching(true);
-    };
 
     return (
         <SafeAreaView style={styles.container}>

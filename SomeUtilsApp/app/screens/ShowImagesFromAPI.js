@@ -26,10 +26,12 @@ function ShowImagesFromApi(props) {
         if(fetching && isMounted){
             axios.get(requestURL).then((response) => {
                 if(isMounted) setLinks([...links, {...response.data, id: pos}])}).finally(() => { 
-                setFetching(false);
-                pos < 4 ? setFetching(true) : setFetching(false);
+                if(isMounted) {
+                    setFetching(false);
+                    pos < 4 ? setFetching(true) : setFetching(false);
+                }
             });
-            setPos(cur => cur + 1);
+            if(isMounted) setPos(cur => cur + 1);
         }
         return () => { isMounted = false };
     }, [fetching]);
