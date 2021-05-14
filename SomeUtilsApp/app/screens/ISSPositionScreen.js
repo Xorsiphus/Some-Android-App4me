@@ -8,6 +8,7 @@ const height = Dimensions.get('screen').height;
 
 function ISSPositionScreen() {
 
+    this.timerId = null;
     const [startCamera, setStartCamera] = useState({
         center: {
            latitude: 0,
@@ -20,12 +21,10 @@ function ISSPositionScreen() {
     });
     const requestURL = "http://api.open-notify.org/iss-now.json";
     const [myRegion, setRegion] = useState({latitude: 200, longitude: 0});
-    const [fetching, setFetching] = useState(true);
-    // const [myInterval, setMyInterval] = useState(null);
+    const [fetching, setFetching] = useState(true); 
 
     useEffect(() => {
         let isMounted = true; 
-        let myInterval = null;
         if(fetching && isMounted){
             axios.get(requestURL).then(response => {
                 if(isMounted) setRegion({
@@ -35,9 +34,12 @@ function ISSPositionScreen() {
         }).finally(() => { 
                 setFetching(false);
             });
-            myInterval = setInterval(regionUpdate, 2000);
+            this.timerId = setInterval(regionUpdate, 2000);
         }
-        return () => { isMounted = false; if(myInterval) clearInterval(myInterval); };
+        return () => { 
+            isMounted = false; 
+            // if(this.timerId) clearInterval(this.timerId); 
+        };
     }, [fetching]);
       
     const regionUpdate = () => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, SafeAreaView, TouchableOpacity, LogBox, Dimensions } from 'react-native';
+import { StyleSheet, SafeAreaView, TouchableOpacity, LogBox, Dimensions, ToastAndroid } from 'react-native';
 import { SliderBox } from "react-native-image-slider-box";
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
@@ -48,11 +48,14 @@ function ShowImagesFromApi(props) {
                 const { uri } = await downloadResumable.downloadAsync();                
                 const asset = await MediaLibrary.createAssetAsync(uri);
                 MediaLibrary.createAlbumAsync('Arts', asset, false);
+                ToastAndroid.show('Success', 2);
           } catch (error) {
+            ToastAndroid.show('Error', 2);
             console.log(error);
           }
         } else {
-          console.log('Need Storage permission to save file');
+            ToastAndroid.show('Error', 2);
+            console.log('Need Storage permission to save file');
         }
     };
 
@@ -81,7 +84,7 @@ function ShowImagesFromApi(props) {
             />
 
             <TouchableOpacity 
-                onPress={() => SaveToPhone(links[curImageView].url)}
+                onPress={SaveToPhone}
                 style={{
                 backgroundColor: 'white',
                 position: 'absolute',
