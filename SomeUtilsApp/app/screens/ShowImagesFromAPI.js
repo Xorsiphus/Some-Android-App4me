@@ -24,7 +24,8 @@ function ShowImagesFromApi(props) {
     useEffect(() => {
         let isMounted = true; 
         if(fetching && isMounted){
-            axios.get(requestURL).then(response => setLinks([...links, {...response.data, id: pos}])).finally(() => { 
+            axios.get(requestURL).then((response) => {
+                if(isMounted) setLinks([...links, {...response.data, id: pos}])}).finally(() => { 
                 setFetching(false);
                 pos < 4 ? setFetching(true) : setFetching(false);
             });
