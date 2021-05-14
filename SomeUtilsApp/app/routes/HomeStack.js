@@ -3,6 +3,7 @@ import { createAppContainer } from "react-navigation";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import ChooseCategoryScreen from "../screens/ChooseCategoryScreen";
 import ShowImagesFromApi from "../screens/ShowImagesFromAPI";
+import ISSPositionScreen from "../screens/ISSPositionScreen";
 
 
 const screens = {
@@ -14,6 +15,9 @@ const screens = {
     },
     ShowImages: {
         screen: ShowImagesFromApi
+    },
+    ISSPositionScreen: {
+        screen: ISSPositionScreen
     }
 };
 

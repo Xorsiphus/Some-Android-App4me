@@ -11,8 +11,8 @@ LogBox.ignoreLogs(['TypeError']);
 
 function ShowImagesFromApi(props) {
 
-    let requestURL = props.navigation.getParam('link') + props.navigation.getParam('categoryName');
-    let dimensions = Dimensions.get('screen');
+    const requestURL = props.navigation.getParam('link') + props.navigation.getParam('categoryName');
+    const dimensions = Dimensions.get('screen');
 
     const [links, setLinks] = useState([]);
     const [pos, setPos] = useState(0);
@@ -32,14 +32,6 @@ function ShowImagesFromApi(props) {
         }
         return () => { isMounted = false };
     }, [fetching]);
-
-    const swipeHandler = (num) => {
-        setCurImageView(num);
-        if(num > (links.length - 4))
-            setFetching(true);
-        else 
-            setFetching(false);
-    };
 
     const SaveToPhone = async (imageUrl) => {
         const permission = await MediaLibrary.requestPermissionsAsync();
@@ -63,6 +55,14 @@ function ShowImagesFromApi(props) {
         }
     };
 
+    const swipeHandler = (num) => {
+        setCurImageView(num);
+        if(num > (links.length - 4))
+            setFetching(true);
+        else 
+            setFetching(false);
+    };
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -70,6 +70,7 @@ function ShowImagesFromApi(props) {
                 images={links.map((item) => item.url)}
                 disableOnPress={true}
                 resizeMode={'contain'}
+                imageLoadingColor={'dodgerblue'}
                 currentImageEmitter={(cur) => swipeHandler(cur)}
                 ImageComponentStyle={{borderRadius: 30, height: dimensions.height, width: dimensions.width}}
                 dotStyle={{

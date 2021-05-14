@@ -15,7 +15,7 @@ function WelcomeScreen(props) {
         <TouchableOpacity onPress={() => props.navigation.navigate('CategoriesList')} activeOpacity={0.5} style={styles.oneButtonView}>
           <Text style={styles.oneButtonText}>Арты</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} style={styles.oneButtonView}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('ISSPositionScreen')} activeOpacity={0.5} style={styles.oneButtonView}>
           <Text style={styles.oneButtonText}>Текущее местоположение МКС</Text>
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.5} style={styles.oneButtonView}>
