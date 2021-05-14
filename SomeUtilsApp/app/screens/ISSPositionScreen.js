@@ -21,7 +21,8 @@ function ISSPositionScreen() {
     });
     const requestURL = "http://api.open-notify.org/iss-now.json";
     const [myRegion, setRegion] = useState({latitude: 200, longitude: 0});
-    const [fetching, setFetching] = useState(true); 
+    const [fetching, setFetching] = useState(true);
+    const [timerId, setTimerId] = useState(null);
 
     useEffect(() => {
         let isMounted = true; 
@@ -32,15 +33,13 @@ function ISSPositionScreen() {
                 longitude: parseFloat(response.data.iss_position.longitude),
             })
         }).finally(() => { 
-                if(isMounted) setFetching(false);
+                setFetching(false);
             });
-            this.timerId = setInterval(() => {
-                if(isMounted) setFetching(true)
-            }, 2000);
+            setTimerId(setInterval(() => setFetching(true), 2000));
         }
         return () => { 
             isMounted = false; 
-            if(this.timerId) clearInterval(this.timerId); 
+            clearInterval(timerId); 
         };
     }, [fetching]);
 
