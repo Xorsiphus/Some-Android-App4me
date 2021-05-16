@@ -19,7 +19,7 @@ function ShowImagesFromApi(props) {
     const [fetching, setFetching] = useState(true);
     const [curImageView, setCurImageView] = useState(0);
 
-    const backHandler = () => props.navigation.goBack();    
+    const pressBack = () => props.navigation.goBack();    
     
     useEffect(() => {
         let isMounted = true; 
@@ -101,7 +101,7 @@ function ShowImagesFromApi(props) {
             </TouchableOpacity>
 
             <TouchableOpacity 
-                onPress={backHandler}
+                onPress={pressBack}
                 style={{
                 backgroundColor: 'white',
                 position: 'absolute',

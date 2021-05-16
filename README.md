@@ -6,7 +6,7 @@ Deployment:
 
 ## Available Scripts
 
-In the project directory(SomeUtilsApp), you can run:
+In the project directory(./SomeUtilsApp), you can run:
 
 ### `npm install`
 

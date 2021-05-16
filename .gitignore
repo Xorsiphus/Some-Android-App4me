@@ -4,6 +4,7 @@
 /SomeUtilsApp/.vscode/
 /SomeUtilsApp/node_moduels/
 /SomeUtilsApp/web-build/
+*.docx
 
 npm-debug.*
 *.jks

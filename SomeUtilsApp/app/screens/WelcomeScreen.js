@@ -18,11 +18,11 @@ function WelcomeScreen(props) {
         <TouchableOpacity onPress={() => props.navigation.navigate('ISSPositionScreen')} activeOpacity={0.5} style={styles.oneButtonView}>
           <Text style={styles.oneButtonText}>Текущее местоположение МКС</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} style={styles.oneButtonView}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('ChooseIngredientsScreen')} activeOpacity={0.5} style={styles.oneButtonView}>
           <Text style={styles.oneButtonText}>Рецепты по ингридиентам</Text>
         </TouchableOpacity>
       </View>
-
+      
       <View style={styles.infoView}>
         <View style={{borderBottomColor: 'black', borderBottomWidth: 2}}/>
         <Text style={styles.infoText}>v0.1</Text>
