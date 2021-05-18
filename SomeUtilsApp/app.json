@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "description": "Some words about this project",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -22,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.xorsiphus.SomeUtilsApp",
+      "package": "com.xorsiphus.someutilsapp",
       "config": {
         "googleMaps": {
           "apiKey": "someSecret"
@@ -37,7 +38,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "description": "Some words about this project"
+    }
   }
 }
