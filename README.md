@@ -6,9 +6,9 @@ This project was bootstrapped with [Expo](https://expo.io/) (platform for React 
 
 #### Required api keys:
 
-- Google maps(file SomeUtilsApp/app.json : config/googleMaps/apiKey): https://console.cloud.google.com/apis/dashboard
+- Google maps(file SomeUtilsApp/app.json : expo/android/config/googleMaps/apiKey): https://console.cloud.google.com/apis/dashboard
 
-- Recipe Search and Diet - EDAMAM(file SomeUtilsApp/app/screens/RecipesScreen.js : app_id + appkey): https://developer.edamam.com/
+- Recipe Search and Diet - EDAMAM(file SomeUtilsApp/app.json : expo/extra/edamam/app_id; expo/extra/edamam/appkey): https://developer.edamam.com/
 
 ## Available Scripts
 

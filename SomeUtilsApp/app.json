@@ -29,6 +29,12 @@
         }
       }
     },
+    "extra": {
+      "edamam": {
+        "app_id": "someSecret",
+        "app_key": "someSecret"
+      }
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     }

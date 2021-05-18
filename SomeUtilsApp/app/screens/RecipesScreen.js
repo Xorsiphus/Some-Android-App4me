@@ -12,6 +12,8 @@ import {
   Linking,
   View,
 } from "react-native";
+import Constants from "expo-constants";
+import * as Manifest from "../../app.json";
 import * as SQLite from "expo-sqlite";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,8 +22,10 @@ import axios from "axios";
 const db = SQLite.openDatabase("recipesDatabase.db");
 
 function RecipesScreen(props) {
-  const app_id = "someSecret";
-  const app_key = "someSecret";
+  //   const app_id = Constants.manifest.extra.edamam.app_id;
+  //   const app_key = Constants.manifest.extra.edamam.app_key;
+  const app_id = Manifest.default.expo.extra.edamam.app_id;
+  const app_key = Manifest.default.expo.extra.edamam.app_key;
   const [recipesFrom, setRecipesFrom] = useState(0);
   const [recipesTo, setRecipesTo] = useState(100);
   const [recipes, setRecipes] = useState([]);
