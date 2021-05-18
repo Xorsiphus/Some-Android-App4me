@@ -8,34 +8,33 @@ import ChooseIngredientsScreen from "../screens/ChooseIngredientsScreen";
 import RecipesScreen from "../screens/RecipesScreen";
 import FavoritesRecipesScreen from "../screens/FavoritesRecipesScreen";
 
-
 const screens = {
-    Home: {
-        screen: WelcomeScreen
-    },
-    CategoriesList: {
-        screen: ChooseCategoryScreen
-    },
-    ShowImages: {
-        screen: ShowImagesFromApi
-    },
-    ISSPositionScreen: {
-        screen: ISSPositionScreen
-    },
-    ChooseIngredientsScreen: {
-        screen: ChooseIngredientsScreen
-    },
-    RecipesScreen: {
-        screen: RecipesScreen
-    },
-    FavoritesRecipesScreen: {
-        screen: FavoritesRecipesScreen
-    },
+  Home: {
+    screen: WelcomeScreen,
+  },
+  CategoriesList: {
+    screen: ChooseCategoryScreen,
+  },
+  ShowImages: {
+    screen: ShowImagesFromApi,
+  },
+  ISSPositionScreen: {
+    screen: ISSPositionScreen,
+  },
+  ChooseIngredientsScreen: {
+    screen: ChooseIngredientsScreen,
+  },
+  RecipesScreen: {
+    screen: RecipesScreen,
+  },
+  FavoritesRecipesScreen: {
+    screen: FavoritesRecipesScreen,
+  },
 };
 
 const HomeStack = createStackNavigator(screens);
 HomeStack.defaultProps = {
-    headerMode: 'none',
+  headerMode: "none",
 };
 
 export default createAppContainer(HomeStack);
