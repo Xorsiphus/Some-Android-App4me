@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -27,7 +25,7 @@
       "package": "com.xorsiphus.SomeUtilsApp",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyA7zIUVpCwikllRK5eNgEo3a5hXBK3NOAI"
+          "apiKey": "someSecret"
         }
       }
     },

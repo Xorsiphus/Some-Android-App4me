@@ -93,6 +93,8 @@ function ChooseCategoryScreen(props) {
                 style={{
                 backgroundColor: 'white',
                 position: 'absolute',
+                borderColor: 'black',
+                borderWidth: 1,
                 padding: 5,
                 borderRadius: 30,
                 bottom: '5%',

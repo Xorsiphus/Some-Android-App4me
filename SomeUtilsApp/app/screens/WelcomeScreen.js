@@ -25,7 +25,7 @@ function WelcomeScreen(props) {
       
       <View style={styles.infoView}>
         <View style={{borderBottomColor: 'black', borderBottomWidth: 2}}/>
-        <Text style={styles.infoText}>v0.1</Text>
+        <Text style={styles.infoText}>v0.9</Text>
       </View>
     </SafeAreaView>
     );
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     },
     oneButtonView: {
       flex: 1,
-      borderWidth: 2,
-      borderColor: 'silver',
+      borderWidth: 1,
+      borderColor: 'black',
       borderRadius: 30,
       backgroundColor: 'white',
       justifyContent: 'center',

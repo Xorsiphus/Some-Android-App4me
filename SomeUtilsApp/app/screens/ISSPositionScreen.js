@@ -46,8 +46,6 @@ function ISSPositionScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <MapView
-                // loadingEnabled={true}
-                // initialRegion={startRegion}
                 initialCamera={startCamera}
                 style={styles.map}
             >

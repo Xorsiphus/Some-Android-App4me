@@ -3,46 +3,54 @@ import { StyleSheet, SafeAreaView, FlatList, View, Text, TouchableOpacity, Toast
 import Autocomplete from 'react-native-autocomplete-input';
 import { AntDesign } from '@expo/vector-icons';
 import Constants from 'expo-constants';
-
+import IngredientsForAutocomplete from '../data/Ingredients.json'
 
 
 function ChooseIngredientsScreen(props) {
-
-    const baseURL = 'https://api.spoonacular.com/food/ingredients/search?apiKey=d6597270e4204c35804c8bbf3dfdc449&number=5&query=';
-    // const [apiIngredients, setAPIIngredients] = useState();
+       
     const [query, setQuery] = useState('');
-    const [ingredients, setIngredients] = useState([{name: 'apple', id: '1214'}, {name: 'apple2', id: '1215'}]);
-    const [finalIngredients, setFinalIngredients] = useState([{name: 'apple', id: '1214'},
-    {name: 'apple', id: '1215'},
-    {name: 'apple', id: '1264'},
-    {name: 'apple', id: '1274'},
-    {name: 'apple', id: '1284'},
-    {name: 'apple', id: '1294'},
-    {name: 'apple', id: '2215'},
-    {name: 'apple', id: '2264'},
-    {name: 'apple', id: '2274'},
-    {name: 'apple', id: '2284'},
-    {name: 'apple', id: '2294'},
-    {name: 'apple', id: '2204'},]);
+    const [ingredients, setIngredients] = useState([]);
+    const [ingredientId, setIngredientId] = useState(0);
+    const [finalIngredients, setFinalIngredients] = useState([]);
 
     const updateIngridients = (newQuery) => {
-        // setAPIIngredients(baseURL + newQuery);
-        fetch(baseURL + newQuery)
-        .then((res) => res.json())
-        .then(({results}) => {
-            setIngredients(results);
-        });      
+        var limit = 7;
+        var newIngredients = IngredientsForAutocomplete.filter((item) => {
+            if(item.substr(0, newQuery.length).toLowerCase() === newQuery.toLowerCase()){
+                limit -= 1;
+                return limit > 0;
+            }
+
+            return false;
+        });
+        var curId = ingredientId;
+        setIngredients(newIngredients.map((item) => {
+            curId += 1;
+            return {name: item, id: (curId).toString()}
+        }));
+        setIngredientId(curId);
         setQuery(newQuery);
     };
 
     const addFinalIngredient = (item) => {
+
+        if(item.name === ''){
+            ToastAndroid.show('Строка пуста!', 2);
+            return;
+        }
+
+        if(finalIngredients.filter((fItem) => fItem.name === item.name).length !== 0) {
+            ToastAndroid.show('Ингредиент уже добавлен!', 2);
+            return;
+        }
+
         setIngredients([]);
-        setQuery(item.name);
         for (var i = 0; i < finalIngredients.length; i++){
             if (finalIngredients[i].id === item.id)
             return;
         }
         setFinalIngredients([...finalIngredients, {name: item.name, id: item.id.toString()}]);
+        setQuery('');
     };
 
     const deleteFinalIngredient = (item) => {
@@ -51,9 +59,11 @@ function ChooseIngredientsScreen(props) {
 
     const pressBack = () => props.navigation.goBack();
 
+    const showFavorites = () => props.navigation.navigate('FavoritesRecipesScreen');
+
     const showRecipes = () => {
         if (finalIngredients.length > 0)
-            props.navigation.navigate('RecipesScreen');
+            props.navigation.navigate('RecipesScreen', {query: finalIngredients.map((item => item.name)).join(',')});
         else
             ToastAndroid.show('Нет ингридиентов!', 2);
     };
@@ -68,29 +78,24 @@ function ChooseIngredientsScreen(props) {
                     data={ingredients}
                     value={query}
                     onChangeText={updateIngridients}
-                    placeholder="Enter your ingridient name here"
+                    placeholder="Введите название ингредиента сюда"
                     flatListProps={{
                         keyExtractor: (item) => item.id.toString(),
                         renderItem: ({ item, i }) => (
                         <TouchableOpacity onPress={() => addFinalIngredient(item)}>
-                            <Text>{item.name}</Text>
+                            <Text style={{fontSize: 15}}>{item.name}</Text>
                         </TouchableOpacity>
                         ),
                     }}
                 />
             </View>
 
-            {/* <ScrollView 
-                style={{top: 200}}
-                keyboardShouldPersistTaps='handled' 
-                showsVerticalScrollIndicator={false}>
-                <View style={styles.scrollView}> */}
-            <View style={{flex: 0.65}}>
+            <View style={{flex: 1}}>
                 <FlatList
                     scrollEnabled={true}
                     style={styles.list}
                     showsVerticalScrollIndicator={false} 
-                    data={finalIngredients.length > 0 ? finalIngredients : [{name: 'Тут будут ваши ингридиенты', id: '1'}]} 
+                    data={finalIngredients.length > 0 ? finalIngredients : [{name: 'Тут будут ваши ингредиенты', id: '1'}]} 
                     keyExtractor={(item) => item.id}
                     renderItem={({item}) => (
                     <TouchableOpacity
@@ -104,6 +109,53 @@ function ChooseIngredientsScreen(props) {
                 />
             </View>
 
+            <TouchableOpacity 
+                onPress={() => {
+                    addFinalIngredient({name: query, id: ingredientId.toString()});
+                    setIngredientId(ingredientId + 1);
+                }}
+                style={{
+                backgroundColor: 'white',
+                position: 'absolute',
+                padding: 5,
+                borderRadius: 30,
+                top: 40,
+                right: 10,
+                borderColor: 'black',
+                borderWidth: 1
+            }}>
+                <AntDesign name="pluscircleo" size={40} color="dodgerblue" />
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+                onPress={showRecipes}
+                style={{
+                backgroundColor: 'white',
+                position: 'absolute',
+                padding: 5,
+                borderRadius: 30,
+                bottom: 175,
+                right: 10,
+                borderColor: 'black',
+                borderWidth: 1
+            }}>
+                <AntDesign name="playcircleo" size={40} color="dodgerblue" />
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+                onPress={showFavorites}
+                style={{
+                backgroundColor: 'white',
+                position: 'absolute',
+                padding: 10,
+                borderRadius: 30,
+                bottom: 100,
+                right: 10,
+                borderColor: 'black',
+                borderWidth: 1
+            }}>
+                <AntDesign name="book" size={30} color="dodgerblue" />
+            </TouchableOpacity>
 
             <TouchableOpacity 
                 onPress={pressBack}
@@ -119,30 +171,15 @@ function ChooseIngredientsScreen(props) {
             }}>
                 <AntDesign name="back" size={40} color="dodgerblue" />
             </TouchableOpacity>
-
-            <TouchableOpacity 
-                onPress={showRecipes}
-                style={{
-                backgroundColor: 'white',
-                position: 'absolute',
-                padding: 10,
-                borderRadius: 30,
-                bottom: 100,
-                right: 10,
-                borderColor: 'black',
-                borderWidth: 1
-            }}>
-                <AntDesign name="forward" size={30} color="dodgerblue" />
-            </TouchableOpacity>
         </SafeAreaView>
       );
 }
 
 const styles = StyleSheet.create({
     autocompleteContainer: {
-        top: 0,
-        left: 0,
-        right: 0,
+        top: 3,
+        left: 10,
+        right: '17%',
         position: 'absolute',
         marginTop: Constants.statusBarHeight + 10,
         // zIndex: 1,
@@ -165,8 +202,8 @@ const styles = StyleSheet.create({
     },
     list: {
         // margin: 20,
-        // flex: 1,
-        top: 200,
+        flex: 1,
+        marginTop: 200,
     }
   });
 
