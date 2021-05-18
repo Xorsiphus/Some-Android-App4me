@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Expo](https://expo.io/) (platform for React Native).
 
-#### Deployment:
+#### Deployment: https://expo.io/@xorsiphus/projects/SomeUtilsApp
 
 #### Required api keys:
 

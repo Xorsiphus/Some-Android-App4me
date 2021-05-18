@@ -12,7 +12,7 @@ import {
   Linking,
   View,
 } from "react-native";
-import Constants from "expo-constants";
+// import Constants from "expo-constants";
 import * as Manifest from "../../app.json";
 import * as SQLite from "expo-sqlite";
 import { AntDesign } from "@expo/vector-icons";
@@ -46,11 +46,13 @@ function RecipesScreen(props) {
     if (fetching && isMounted) {
       axios.get(requestURL).then((response) => {
         const unhandledRecipes = response.data;
+        // console.log(unhandledRecipes);
         var curId = id;
         setRecipes(
           recipes.concat(
             unhandledRecipes.hits.map((item) => {
               curId += 1;
+              console.log(curId);
               return {
                 id: curId.toString(),
                 label: item.recipe.label,
@@ -66,6 +68,7 @@ function RecipesScreen(props) {
         );
         setId(curId);
         setFetching(false);
+        // console.log(recipesFrom, recipesTo);
       });
     }
     return () => {
@@ -74,8 +77,10 @@ function RecipesScreen(props) {
   }, [fetching]);
 
   const updateFetching = () => {
-    setRecipesFrom(recipesTo);
-    setRecipesTo(recipesTo + 100);
+    var oldRecipesTo = recipesTo;
+    setRecipesFrom(oldRecipesTo);
+    setRecipesTo(oldRecipesTo + 100);
+    // console.log(recipesFrom, recipesTo);
     setFetching(true);
   };
 
@@ -123,7 +128,7 @@ function RecipesScreen(props) {
       <FlatList
         showsVerticalScrollIndicator={false}
         data={recipes}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.2}
         onEndReached={updateFetching}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
