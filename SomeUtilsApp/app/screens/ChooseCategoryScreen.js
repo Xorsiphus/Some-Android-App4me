@@ -9,7 +9,6 @@ import {
   ScrollView,
   Button,
   TouchableOpacity,
-  TouchableWithoutFeedback,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 

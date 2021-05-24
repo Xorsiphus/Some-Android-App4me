@@ -12,6 +12,7 @@ import {
   Linking,
   View,
 } from "react-native";
+import Spinner from "react-native-loading-spinner-overlay";
 // import Constants from "expo-constants";
 import * as Manifest from "../../app.json";
 import * as SQLite from "expo-sqlite";
@@ -31,6 +32,7 @@ function RecipesScreen(props) {
   const [recipes, setRecipes] = useState([]);
   const [id, setId] = useState(0);
   const [fetching, setFetching] = useState(true);
+  const [spinner, setSpinner] = useState(true);
 
   useEffect(() => {
     db.transaction((tx) => {
@@ -52,7 +54,7 @@ function RecipesScreen(props) {
           recipes.concat(
             unhandledRecipes.hits.map((item) => {
               curId += 1;
-              console.log(curId);
+              // console.log(curId);
               return {
                 id: curId.toString(),
                 label: item.recipe.label,
@@ -68,6 +70,7 @@ function RecipesScreen(props) {
         );
         setId(curId);
         setFetching(false);
+        setSpinner(false);
         // console.log(recipesFrom, recipesTo);
       });
     }
@@ -125,58 +128,70 @@ function RecipesScreen(props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={recipes}
-        onEndReachedThreshold={0.2}
-        onEndReached={updateFetching}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          // console.log(item);
-          return (
-            <View>
-              <TouchableOpacity
-                onPress={() => openRecipe(item.url)}
-                style={styles.item}
-              >
-                <Image style={styles.image} source={{ uri: item.image }} />
-                <Text style={styles.notation}>
-                  {item.dishType || "Не указано"} :{" "}
-                  {item.cuisineType || "Не указано"}
-                </Text>
-                <Text style={styles.notation}>
-                  {item.calories.toPrecision(6) + " calories" || "Не указано"}
-                </Text>
-                <Text style={styles.label}>{item.label}</Text>
-                <Text style={styles.ingredients}>
-                  {"➨ " + item.ingredientLines.join("\n➨ ") || "Не указано"}
-                </Text>
-              </TouchableOpacity>
+      {recipes.length == 0 ? (
+        <View style={styles.loadingContainer}>
+          <Spinner
+            visible={spinner}
+            color={"red"}
+            overlayColor={"rgba(0, 0, 0, 0.6)"}
+            animation={"fade"}
+            textStyle={{ color: "white" }}
+            textContent={"Loading..."}
+          />
+        </View>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={recipes}
+          onEndReachedThreshold={0.2}
+          onEndReached={updateFetching}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            // console.log(item);
+            return (
+              <View>
+                <TouchableOpacity
+                  onPress={() => openRecipe(item.url)}
+                  style={styles.item}
+                >
+                  <Image style={styles.image} source={{ uri: item.image }} />
+                  <Text style={styles.notation}>
+                    {item.dishType || "Не указано"} :{" "}
+                    {item.cuisineType || "Не указано"}
+                  </Text>
+                  <Text style={styles.notation}>
+                    {item.calories.toPrecision(6) + " calories" || "Не указано"}
+                  </Text>
+                  <Text style={styles.label}>{item.label}</Text>
+                  <Text style={styles.ingredients}>
+                    {"➨ " + item.ingredientLines.join("\n➨ ") || "Не указано"}
+                  </Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => addFavoriteToDb(item)}
-                style={{
-                  backgroundColor: "white",
-                  position: "absolute",
-                  padding: 5,
-                  borderRadius: 10,
-                  top: 20,
-                  right: 30,
-                  borderColor: "black",
-                  borderWidth: 2,
-                }}
-              >
-                <Ionicons
-                  name="ios-bookmark-outline"
-                  size={50}
-                  color="dodgerblue"
-                />
-              </TouchableOpacity>
-            </View>
-          );
-        }}
-      />
-
+                <TouchableOpacity
+                  onPress={() => addFavoriteToDb(item)}
+                  style={{
+                    backgroundColor: "white",
+                    position: "absolute",
+                    padding: 5,
+                    borderRadius: 10,
+                    top: 20,
+                    right: 30,
+                    borderColor: "black",
+                    borderWidth: 2,
+                  }}
+                >
+                  <Ionicons
+                    name="ios-bookmark-outline"
+                    size={50}
+                    color="dodgerblue"
+                  />
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+        />
+      )}
       <TouchableOpacity
         onPress={pressBack}
         style={{
@@ -197,6 +212,12 @@ function RecipesScreen(props) {
 }
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: StatusBar.currentHeight,
+  },
   container: {
     backgroundColor: "dodgerblue",
     flex: 1,
